@@ -1,3 +1,4 @@
+FILEPATH = "calibration"
 NUMBER_LIST = ["one","two","three","four","five","six","seven","eight","nine"]
 
 def filehandling(filename):
@@ -34,7 +35,7 @@ def findNumberPair(inputString):
   numberPair += findNumber(reversedString, True)
   return int(numberPair)
 
-if __name__ == "__main__":
+def main():
 #  print(findNumberPair("fivecqkzbllhshphlseven4ftfivevl3"))
   data = filehandling(FILEPATH)
   total = 0
@@ -43,3 +44,6 @@ if __name__ == "__main__":
     findNumberPair(line)
     total += findNumberPair(line)
   print(total)
+
+if __name__ == "__main__":
+  main()
