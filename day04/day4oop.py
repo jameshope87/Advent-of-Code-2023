@@ -1,28 +1,7 @@
-from day04.day4 import countCard
 from helpers import filehandling
 
 FILEPATH = 'day04/day4input'
 TESTPATH = 'day04/day4test'
-
-
-class Card:
-
-  def __init__(self, id, numbers, winners):
-    self.id = id
-    self.numbers = numbers
-    self.winners = winners
-    self.copies = 1
-    self.count = 0
-    for number in self.numbers:
-      if number in self.winners:
-        self.count += 1
-
-  def countCard(self):
-    for number in self.numbers:
-      if number in self.winners:
-        self.count += 1
-  def addCopies(self,number):
-    self.copies += number
 
 def parseLine(line):
   line = line.split(':')
@@ -39,43 +18,55 @@ def parseLine(line):
   numbers = [int(i) for i in numbers if i]
   return gameNo, numbers, winners
 
-def scoreCard(numbers, winners):
-  count = 0
-  for number in numbers:
-    if number in winners:
-      count += 1
-  if count > 0:
-    return 1 * (2**(count - 1))
-  else:
-    return 0
+class Card:
 
-def part1():
-  data = filehandling(FILEPATH)
-  cards = []
-  for line in data:
-    cards.append(parseLine(line))
-  total = 0
-  for card in cards:
-    total += scoreCard(card[1], card[2])
-  return total
+  def __init__(self, id, numbers, winners):
+    self.id = id
+    self.numbers = numbers
+    self.winners = winners
+    self.copies = 1
+    self.count = 0
+    self.score = 0
+    
+  def countCard(self):
+    for number in self.numbers:
+      if number in self.winners:
+        self.count += 1
+        
+  def addCopies(self,number):
+    self.copies += number
+
+  def scoreCard(self):
+    if self.count>0:
+      self.score = 1 * (2**(self.count -1))
 
 def processCard(card, cardList):
+  card.countCard()
+  card.scoreCard()
   for i in range(card.id, card.id + card.count):
     cardList[i].addCopies(card.copies)
 
-def part2():
-  data = filehandling(FILEPATH)
+def buildCardList(data):
   cardList = []
-  score = 0
   for line in data:
     gameNo, numbers, winners = parseLine(line)
     cardList.append(Card(gameNo, numbers, winners))
+  return cardList
+
+def main():
+  data = filehandling(FILEPATH)
+  cardList = buildCardList(data)
   for card in cardList:
     processCard(card, cardList)
+  cardCount = 0
+  score = 0
   for card in cardList:
-    score += card.copies
-  return score
+    score += card.score
+    cardCount += card.copies
+
+  print(f'Part 1: The score of the cards is {score}\nPart 2: The total number of cards is {cardCount}')
+  return score, cardCount
 
 
 if __name__ == "__main__":
-  pass
+  main()

@@ -1,5 +1,4 @@
-from day04.day4oop import part1, part2
+from day04.day4oop import main
 
 if __name__ == "__main__":
-  print(part2())
-  #print(part2())
+  main()
