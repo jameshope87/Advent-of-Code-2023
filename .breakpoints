@@ -1,3 +1,20 @@
 {
-  "files": {}
+  "files": {
+    "day04/day4.py": [
+      {
+        "id": "9b30fa36-d30b-4393-895f-2a14a245073a",
+        "line": 62,
+        "version": 1347,
+        "index": 1328
+      }
+    ],
+    "main.py": [
+      {
+        "id": "3ca113dc-7e4a-4155-866f-5651cb011fcd",
+        "line": 4,
+        "version": 4137,
+        "index": 64
+      }
+    ]
+  }
 }
