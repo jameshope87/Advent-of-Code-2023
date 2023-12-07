@@ -1,19 +1,19 @@
 {
   "files": {
-    "day04/day4.py": [
+    "day06/day6.py": [
       {
-        "id": "8c38e3ad-65e4-41ea-ae30-3e4c59f9b71c",
-        "line": 77,
-        "version": 1397,
-        "index": 1669
+        "id": "dc4c1c6c-ccc8-4184-b946-b7a02828ae0a",
+        "line": 71,
+        "version": 1768,
+        "index": 1957
       }
     ],
     "main.py": [
       {
         "id": "3ca113dc-7e4a-4155-866f-5651cb011fcd",
-        "line": 4,
-        "version": 4137,
-        "index": 64
+        "line": 1,
+        "version": 4271,
+        "index": 14
       }
     ]
   }
