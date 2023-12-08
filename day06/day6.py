@@ -1,7 +1,14 @@
-from helpers import filehandling
+import os
+import pathlib
+import time
 
-FILEPATH = 'day06/day6input'
-TESTPATH = 'day06/day6test'
+def filehandling(filename):
+  with open(filename, "r") as f:
+    data = f.read().splitlines()
+  return data
+
+FILEPATH = os.path.join(pathlib.Path(__file__).parent.absolute(), 'day6input')
+TESTPATH = os.path.join(pathlib.Path(__file__).parent.absolute(), 'day6test')
 
 class Race:
 
@@ -57,7 +64,7 @@ def parseData(data):
   distances = [x for x in line.split(':')[1].split(' ') if x]
   bigracedist = int(''.join(distances))
   distances = [int(x) for x in distances]
-  for time, distance in zip(times, distances, strict=True):
+  for time, distance in zip(times, distances):
     races.append(Race(time, distance))
   bigrace = Race(bigracetime, bigracedist)
   return races, bigrace
@@ -82,4 +89,16 @@ def main(bin=True):
 
 
 if __name__ == "__main__":
-  main()
+  #main()
+  start_time = time.time()
+  part1, part2 = main(False)
+  print(f"The answer to part 1 is {part1}")
+  print(f"The answer to part 2 is {part2}")
+  end_time = time.time()
+  print(f'The program took {end_time-start_time} to execute with a linear search')
+  start_time = time.time()
+  part1, part2 = main(True)
+  print(f"The answer to part 1 is {part1}")
+  print(f"The answer to part 2 is {part2}")
+  end_time = time.time()
+  print(f'The program took {end_time-start_time} to execute with a binary search')
