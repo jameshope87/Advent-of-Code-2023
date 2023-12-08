@@ -1,5 +1,6 @@
 import os
 import pathlib
+import math
 
 def filehandling(filename):
   with open(filename, "r") as f:
@@ -8,58 +9,43 @@ def filehandling(filename):
 
 FILEPATH = os.path.join(pathlib.Path(__file__).parent.absolute(), 'day8input')
 TESTPATH = os.path.join(pathlib.Path(__file__).parent.absolute(), 'day8test')
+TESTPATH2 = os.path.join(pathlib.Path(__file__).parent.absolute(), 'day8test2')
 DIRECTIONS = ['L','R']
 START = 'AAA'
 END = 'ZZZ'
+directions = ''
+maps = {}
 
 def parseData(data):
+  global directions
   directions = data.pop(0)
-  maps = {}
   data.pop(0)
   for line in data:
     id = line[:3]
     left = line[7:10]
     right = line[12:15]
     maps[id] = [left,right]
-  return directions, maps
 
-def makeMove(maps, location, direction):
-  return maps[location][DIRECTIONS.index(direction)]
-
-def traverseMaze(maps, directions):
-  current = START
+def traverseMaze(start, end, part2 = False):
   steps = 0
   loopLength = len(directions)
   while True:
     direction = directions[steps % loopLength]
-    next = makeMove(maps,current,direction)
+    start = maps[start][DIRECTIONS.index(direction)]
     steps += 1
-    print(f'After {steps} step we moved {direction} from {current} to {next}')
-    current = next
-    if current == END:
+    if start == end or (part2 and start[-1] == end[-1]):
       return steps
-    #print(makeMove(maps, 'AAA', 'R'))
-
-def traverseGhostMaze(maps, directions):
-  currents = [key for key in maps.keys() if key[2] == 'A']
-  steps = 0
-  loopLength = len(directions)
-  while True:
-    direction = directions[steps%loopLength]
-    nexts = [makeMove(maps,location,direction) for location in currents]
-    steps += 1
-    print(nexts, ' ', steps)
-    currents = nexts
-    if all(final[2] == 'Z' for final in currents):
-      return steps
-
 
 def main(part=1):
   data = filehandling(FILEPATH)
-  directions, maps = parseData(data)
-  #totalSteps = traverseMaze(maps, directions)
-  #print(totalSteps)
-  totalSteps = traverseGhostMaze(maps, directions)
+  parseData(data)
+  totalSteps = traverseMaze(START, END)
+  print(totalSteps)
+  #part 2
+  #data = filehandling(TESTPATH2)
+  #parseData(data)
+  starts = [key for key in maps.keys() if key[2] == 'A']
+  totalSteps = math.lcm(*[traverseMaze(start, END, True) for start in starts])
   print(totalSteps)
 
 if __name__ == "__main__":
