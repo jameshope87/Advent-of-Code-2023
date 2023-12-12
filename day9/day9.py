@@ -1,6 +1,5 @@
 import os
 import pathlib
-from turtle import end_fill
 
 def filehandling(filename):
   with open(filename, "r") as f:
